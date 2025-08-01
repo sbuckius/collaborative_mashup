@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Collaborative Mashup</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="image_mashup_24_shared.js"></script>
+  <style>
+    body {
+      text-align: center;
+      font-family: sans-serif;
+      background: #f0f0f0;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      margin-top: 10px;
+    }
+    .upload-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .upload-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 13px;
+    }
+    .upload-box input[type="file"] {
+      width: 110px;
+      padding: 4px;
+      border: 1px solid #ccc;
+    }
+    .uploaded {
+      background: #c9f9d2;
+      border-color: #5cb85c;
+    }
+    button {
+      margin: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Collaborative Mashup!!</h2>
+  <p><strong>Image 1 is the background.</strong> Other images are mashed up.</p>
+
+  <div class="upload-grid" id="uploadGrid"></div>
+
+  <button onclick="generateLayout()">Mashup!!!</button>
+  <button onclick="saveCollage()">Save Image</button>
+  <button onclick="resetCollage()">Reset Mashup</button>
+
+  <script>
+    const uploadGrid = document.getElementById("uploadGrid");
+    for (let i = 1; i <= 24; i++) {
+      const box = document.createElement("div");
+      box.className = "upload-box";
+
+      const label = document.createElement("label");
+      label.textContent = `Image ${i}`;
+
+      const input = document.createElement("input");
+      input.type = "file";
+      input.id = `imgUpload${i}`;
+      input.accept = "image/*";
+      input.addEventListener("change", () => {
+        if (input.files.length > 0) input.classList.add("uploaded");
+      });
+
+      box.appendChild(label);
+      box.appendChild(input);
+      uploadGrid.appendChild(box);
+    }
+  </script>
+</body>
+</html>
